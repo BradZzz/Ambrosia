@@ -17,7 +17,10 @@
     "underscore": "^1.8.3",
     "validator-js": "~3.41.2",
     "highcharts": "^4.2.3",
-    "chance": "^1.0.0"
+    "chance": "^1.0.0",
+    "ng-file-upload": "^12.0.4",
+    "aws-sdk": "^2.2.48",
+    "angular-flash-alert": "^2.2.7"
   },
   "resolutions": {
     "angular": "~1.4.2"

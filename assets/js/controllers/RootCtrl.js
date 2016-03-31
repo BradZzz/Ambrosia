@@ -13,6 +13,11 @@ angular.module('ambrosia').controller('RootCtrl', ['$rootScope', '$state', '$sta
     }
   }
 
+  $rootScope.flashCallback = function (message) {
+    console.log('Flash Callback!')
+    console.log(message)
+  }
+
   $rootScope.alert = function (message) {
       alert(message)
   }

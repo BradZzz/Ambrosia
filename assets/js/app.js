@@ -6,6 +6,8 @@ var modules = [
   'ui.router',
   'angular-loading-bar',
   'ui.bootstrap',
+  'ngFlash',
+  'ngFileUpload',
 ]
 
 var role = {
@@ -23,33 +25,51 @@ function ($locationProvider, $stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise("/")
 
-  $stateProvider
-    .state('home', {
-      url: "/",
-      templateUrl: "/assets/html/home/main.html",
-      controller: "MainCtrl"
-    })
-    .state('stock', {
-      url: "/stockui?ticker",
-      templateUrl: "/assets/html/home/stock.html",
-      controller: "StockCtrl"
-    })
-    .state('profile', {
-      url: "/profile",
-      templateUrl: "/assets/html/home/profile.html",
-      controller: "ProfileCtrl"
-    })
+
+  $stateProvider.state('site', {
+    'abstract': true,
+    template: '<ui-view/>',
+    resolve: {
+      authorize: ['seAuthorization', function(seAuthorization) { return seAuthorization.authorize() } ]
+    }
+  }).state('home', {
+    url: "/",
+    parent: 'site',
+    templateUrl: "/assets/html/home/main.html",
+    controller: "MainCtrl",
+  }).state('stock', {
+    url: "/stockui?ticker",
+    parent: 'site',
+    templateUrl: "/assets/html/home/stock.html",
+    controller: "StockCtrl",
+  }).state('profile', {
+    url: "/profile",
+    parent: 'site',
+    templateUrl: "/assets/html/home/profile.html",
+    controller: "ProfileCtrl",
+    data: { role: 1 }
+  })
 
   $locationProvider.html5Mode(true)
 }])
 
 app.run(
-['$rootScope',
-function ($rootScope) {
+['$rootScope', '$state', '$stateParams', 'seAuthorization', 'sePrincipal',
+function ($rootScope, $state, $stateParams, seAuthorization, sePrincipal) {
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
     console.log("state", toState, toParams, fromState, fromParams)
+
+    $rootScope.toState = toState
+    $rootScope.toStateParams = toParams
+
+    console.log('toState')
+    if (sePrincipal.isIdentityResolved()) {
+        console.log('identity resolved')
+        seAuthorization.authorize()
+    }
+
   })
-}]);
+}])
 
 app.config(['$mdThemingProvider',
 function ($mdThemingProvider) {
