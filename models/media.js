@@ -1,18 +1,10 @@
 var mongoose = require('mongoose')
 
 var mediaSchema = new mongoose.Schema({
+    seriesID: { type: Number, required: true, index: true },
 	name: { type: String, required: true, index: true },
-	poster: {type: String},
-	plot: {type: String},
-	rated: {type: String},
-	path: {type: String, required: true},
-	type: {type: String, required: true},
-	genre: [{ type: String },],
-	episodes: [{ type: String },],
-	runtime: { type: String },
-	imdbRating: { type: Number },
-	imdbId: { type: String },
-	year: { type: String },
+	meta: [{ type: mongoose.Schema.Types.Mixed }],
+	episodes: [{ type: mongoose.Schema.Types.Mixed }],
 	created: { type: Date, default: Date.now },
 	__v: { type: Number, select: false },
 })
