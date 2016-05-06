@@ -20,6 +20,8 @@ var userSchema = new mongoose.Schema({
   photo:    { type: String, default: 'assets/img/test/test_logged_out.png' },
   background : { type: Number, default: 1 },
 
+  favorites : [{ type: mongoose.Schema.Types.Mixed }],
+
   //server fields
   pass:     { type: String, required: true },
   role:     { type: Number, default: 1 },

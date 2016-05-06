@@ -106,7 +106,7 @@ function ($scope, $state, $rootScope, $timeout, $mdSidenav, $log, seMedia, seThe
   //    $scope.loginRegister.refresh()
   //})
 
-  seMedia.getMedia().then(function(response){
+  /*seMedia.getMedia().then(function(response){
       console.log('test list response: ', response)
       $scope.ctrl.states = _.map( seMedia.getSearchFormatted(response) , function (meta) {
          return {
@@ -115,7 +115,7 @@ function ($scope, $state, $rootScope, $timeout, $mdSidenav, $log, seMedia, seThe
            type: meta.type
          }
       })
-  })
+  })*/
 
   $scope.toggleRight = buildToggler('left')
 

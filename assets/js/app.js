@@ -63,15 +63,11 @@ function ($locationProvider, $stateProvider, $urlRouterProvider) {
     templateUrl: "/assets/html/home/analytics.html",
     controller: "AnalyticsCtrl",
     data: { role: 1 }
-  }).state('localplayer', {
-    url: "/plocal?path",
+  }).state('series', {
+    url: "/series?id",
     parent: 'site',
-    templateUrl: "/assets/html/home/localplayer.html",
-    controller: "LocalPlayerCtrl",
-    data: { role: 1 }
-  }).state('mpl', {
-    url: "/mpl",
-    templateUrl: "/assets/html/misc/mpl.html"
+    templateUrl: "/assets/html/home/series.html",
+    controller: "SeriesCtrl"
   })
 
   $locationProvider.html5Mode(true)
