@@ -5,7 +5,7 @@
 				<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 			</div>
 			<span ng-click="ctrl.navigate(dat.seriesID)" ng-class="{'show' : !ctrl.loading, 'remove' : ctrl.loading}" ng-repeat="dat in ctrl.fData">
-				{{ dat.seriesID }} : {{ dat.name }} : {{ dat.meta[0].Status }}
+				{{ dat }}
 			</span>
 		</md-card>
 		<md-card flex="15" layout="column">

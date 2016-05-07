@@ -16,7 +16,10 @@ function ($http, $q, Flash)
       return $http({
         url: '/media/all',
         method: 'GET',
-        params: {}
+        params: {
+            page : 0,
+            limit : 50,
+        }
       }).then(function (response) {
         self.cache.getAllMedia = _.sortBy(response.data, 'name')
         return self.cache.getAllMedia

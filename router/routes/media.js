@@ -30,16 +30,16 @@ String.prototype.capitalize = function() {
 module.exports = function (app) {
 
     app.get('/media/all', function (req, res) {
-        if ('mediaAll' in cache) {
-            return res.status(200).json(cache.mediaAll)
-        }
-        Media.find({}, function(err, data){
+      if ('page' in req.query && 'limit' in req.query) {
+        var page = req.query.page
+        var limit = req.query.limit
+        Media.find({ "status" : { "$exists" : true }}, function(err, data){
           if (err) {
             return res.status(500).json(err)
           }
-          cache.mediaAll = data
           return res.status(200).json(data)
-        })
+        }).skip(page > 0 ? ((page - 1) * limit) : 0).limit(limit)
+      }
     })
 
     app.get('/media/meta', function (req, res) {
@@ -82,8 +82,44 @@ module.exports = function (app) {
       })
     })
 
+    app.get('/media/clean2', function (req, res) {
+      Media.find({ "meta" : { "$exists" : true }, "status" : { "$exists" : false } }, function(err, data){
+        var count = 0
+        console.log("returned")
+        if (data.length === 0) {
+            return res.status(200).json("Done")
+        }
+        _.each(data, function(dat){
+            var meta = dat.meta[0]
+            dat.status = meta.Status[0]
+            dat.poster = meta.poster[0]
+            dat.banner = meta.banner[0]
+            dat.fanart = meta.fanart[0]
+            dat.rating = isNaN(parseFloat(meta.Rating[0])) ? -1 : parseFloat(meta.Rating[0])
+            dat.content = meta.ContentRating[0]
+            dat.imdb = meta.IMDB_ID[0]
+            dat.imdbRating = -1
+            dat.genre = _.filter(meta.Genre[0].split("|"),function(genre){
+                return genre
+            })
+            dat.meta = undefined
+            dat.episodes = undefined
+            console.log(dat)
+            dat.save(function(err, obj){
+                count += 1
+                console.log(err)
+                console.log(obj)
+                console.log("Saved: " + dat.name + " : " + count)
+                if (count === data.length) {
+                    return res.status(200).json("Done")
+                }
+            })
+        })
+      }).limit(1000)
+    })
+
     app.get('/media/clean', function (req, res) {
-      Media.find({ "meta" : { "$exists" : false } }, function(err, data){
+      Media.find({ "meta" : { "$exists" : false }, "status" : { "$exists" : false } }, function(err, data){
         console.log('exists returned')
         Q.all(getStockPipelinePromises(data)).then(function(result){
           return res.status(200).json(result)
