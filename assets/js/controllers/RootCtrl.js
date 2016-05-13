@@ -1,5 +1,5 @@
-angular.module('ambrosia').controller('RootCtrl', ['$rootScope', '$state', '$stateParams', '$timeout', 'cfpLoadingBar',
-function ($rootScope, $state, $stateParams, $timeout, cfpLoadingBar)
+angular.module('ambrosia').controller('RootCtrl', ['$rootScope', '$state', '$stateParams', '$timeout', '$window', 'cfpLoadingBar',
+function ($rootScope, $state, $stateParams, $timeout, $window, cfpLoadingBar)
 {
   $rootScope.safeApply = function (fn) {
     var $root = this.$root
@@ -16,6 +16,10 @@ function ($rootScope, $state, $stateParams, $timeout, cfpLoadingBar)
   $rootScope.flashCallback = function (message) {
     console.log('Flash Callback!')
     console.log(message)
+  }
+
+  $rootScope.nav = function (url) {
+    $window.open(url)
   }
 
   $rootScope.alert = function (message) {

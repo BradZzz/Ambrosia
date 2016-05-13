@@ -8,39 +8,50 @@ angular.module('ambrosia').controller('MainCtrl',
 
     $scope.ctrl = {
         data : [],
-        fData : [],
+        lastData : [],
+        page : 0,
+        limit : 50,
+        contains : '',
         loading : false,
         onAir : false,
+        fetching : false,
         contains : '',
         refresh : function () {
             this.loading = true
-            console.log("Loading: " + $scope.ctrl.loading)
-            this.filterItems()
-            this.loading = false
-            console.log("Loading: " + $scope.ctrl.loading)
-        },
-        filterItems : function () {
-            this.fData = _.filter(this.data, function(item){
-                var truthy = true
-                if ($scope.ctrl.onAir) {
-                    truthy = truthy && item.meta[0].Status[0] === "Continuing"
-                }
-                if ($scope.ctrl.contains) {
-                    truthy = truthy && item.name.indexOf($scope.ctrl.contains) > -1
-                }
-                return truthy
-            })
+            this.page = 0
+            this.data = []
+            loadStuff()
         },
         navigate : function (id) {
             $state.go('series', { id: id })
+        },
+        loadMore : function() {
+            if (!$scope.ctrl.fetching) {
+                console.log('load more!!!')
+                $scope.ctrl.fetching = true
+                loadStuff()
+            } else {
+                console.log('still fetching')
+            }
         }
 
     }
 
-    seMedia.getAllMedia().then(function(data){
-        console.log(data)
-        $scope.ctrl.data = $scope.ctrl.fData = data
-        $rootScope.loading = false
-    })
+    function loadStuff() {
+        seMedia.getAllMedia($scope.ctrl.page, $scope.ctrl.limit, $scope.ctrl.contains, $scope.ctrl.onAir).then(function(data){
+            if ($scope.ctrl.lastData != data) {
+              console.log(data)
+              $scope.ctrl.lastData = data
+              $scope.ctrl.data = _.flatten([$scope.ctrl.data, data])
+              console.log($scope.ctrl.data)
+              $scope.ctrl.page += 1
+              $rootScope.loading = false
+              $scope.ctrl.fetching = false
+              $scope.ctrl.loading = false
+            }
+        })
+    }
+
+    loadStuff()
 
 }])

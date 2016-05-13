@@ -1,5 +1,50 @@
 <div class="series">
-	<md-card style="height: 90vh;" layout="column">
-		<b>{{ ctrl.series }}</b>
+	<md-card style="height: 90vh; overflow-y: auto" layout="column">
+		<div ng-repeat="series in ctrl.series.Series">
+			<div class="md-margin" style="border-radius: 5px; position: relative; min-height: 240px; background: url('http://thetvdb.com/banners/{{ series.banner[0] }}'); background-repeat: no-repeat; background-size: 100%;">
+				<div class="banner-overlay"></div>
+			</div>
+			<div class="meta-cards" style="max-height: 200px;margin: 20px 0 20px 0;" layout="row">
+				<md-card offset="15" flex="25" class="shadow">
+					<div style="overflow-y:auto; margin: 15px; border: 1px solid; border-radius: 5px;">
+						<md-subheader class="md-primary">Actors</md-subheader>
+						<md-list style="margin-left: 40px;">
+							<md-list-item class="md-1-line" ng-repeat="item in ctrl.parseStringArray(series.Actors[0])">
+								<span>{{ item }}</span>
+							</md-list-item>
+						</md-list>
+					</div>
+				</md-card>
+				<!-- <md-card offset="5" flex="25" style="overflow-y:auto">
+					<md-subheader class="md-primary">Stats</md-subheader>
+					<md-list>
+						<md-list-item class="md-1-line" ng-repeat="item in ctrl.parseActors(series.Actors[0])">
+							<span>{{ item }}</span>
+						</md-list-item>
+					</md-list>
+				</md-card> -->
+				<md-card offset="20" flex="25" class="shadow">
+					<div style="overflow-y:auto; margin: 15px; border: 1px solid; border-radius: 5px;">
+						<md-subheader class="md-primary">Genre</md-subheader>
+						<md-list style="margin-left: 40px;">
+							<md-list-item class="md-1-line" ng-repeat="item in ctrl.parseStringArray(series.Genre[0])">
+								<span>{{ item }}</span>
+							</md-list-item>
+						</md-list>
+					</div>
+				</md-card>
+			</div>
+			<div layout="row">
+				<img offset="5" flex="20" ng-if="ctrl.images.poster" ng-src="{{ ctrl.images.poster }}" style="height: 350px; width: 200px; border: 1px solid;">
+				<div offset="5" flex="60" style="margin-top:25px;">
+					<md-subheader class="md-primary">Summary</md-subheader>
+					<md-content flex layout-padding>{{ series.Overview[0] }}</md-content>
+				</div>
+			</div>
+		</div>
+		<span ng-repeat="(key, value) in ctrl.episodes">
+			<md-subheader class="md-primary">Season: {{key}}</md-subheader>
+			<md-content flex layout-padding>{{value}}</md-content>
+		</span>
 	</md-card>
 </div>

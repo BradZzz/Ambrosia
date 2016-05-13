@@ -30,15 +30,25 @@ String.prototype.capitalize = function() {
 module.exports = function (app) {
 
     app.get('/media/all', function (req, res) {
-      if ('page' in req.query && 'limit' in req.query) {
+      console.log(req.query)
+      if ('page' in req.query && 'limit' in req.query && 'contains' in req.query && 'onair' in req.query) {
         var page = req.query.page
         var limit = req.query.limit
-        Media.find({ "status" : { "$exists" : true }}, function(err, data){
+        var query = { "status" : { "$exists" : true }}
+        if (req.query.onair !== 'false') {
+            query.status = "Continuing"
+        }
+        if (req.query.contains) {
+            query.name = { "$regex": req.query.contains, "$options": "i" }
+        }
+        //&& 'contains' in req.query && 'onair' in req.query
+        console.log(query)
+        Media.find( query, function(err, data){
           if (err) {
             return res.status(500).json(err)
           }
           return res.status(200).json(data)
-        }).skip(page > 0 ? ((page - 1) * limit) : 0).limit(limit)
+        }).skip(page * limit).limit(limit).sort('name')
       }
     })
 
@@ -48,6 +58,7 @@ module.exports = function (app) {
                 return res.status(200).json(cache.mediaMeta[req.query.id])
             } else {
                 getTVMeta(req.query.id).then(function(results){
+                    cache.mediaMeta[req.query.id] = results
                     return res.status(200).json(results)
                 })
             }

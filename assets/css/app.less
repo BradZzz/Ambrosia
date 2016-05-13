@@ -27,6 +27,7 @@
 @blue-sky-full:   rgba(64,150,238,.8);
 @blue-navy-full:   rgba(37,128,207,.8);
 @grey-full:   rgba(225,232,235,.8);
+@yellow-full:   rgba(232,232,0,.8);
 @black-full:   rgba(0,0,0,.8);
 
 /* Hues Using */
@@ -101,6 +102,9 @@ html, body {
 }
 
 .color {
+    &.yellow {
+        color : @yellow-full !important;
+    }
     &.red {
         color : @red-full !important;
     }
@@ -143,6 +147,48 @@ button.md-raised {
     &.small {
         height: 60px;
     }
+}
+
+.shadow {
+  box-shadow: 0 5px 10px rgba(0,0,0,0.12), 0 3px 4px rgba(0,0,0,0.24);
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+  &.small {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24) !important;
+    &:hover {
+        box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 4px 4px rgba(0,0,0,0.23) !important;
+    }
+  }
+}
+
+.img-fade {
+  position: relative;
+  display: inline-block;
+}
+.img-fade:before {
+  content: "";
+  top: 0;
+  left: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(49%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(255, 255, 255, 1)));
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+}
+
+.fade-generic {
+    background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(49%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(255, 255, 255, 1)));
+    background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+    background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 49%, rgba(255, 255, 255, 1) 100%);
 }
 
 .center-vertical {
@@ -309,47 +355,58 @@ button.md-raised {
   opacity: 0;
 }
 
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
 .main {
-    .parent {
-        &:hover {
-            opacity: .2;
-        }
-    }
-    .sq-button {
-        max-height: 20px;
-        max-width: 50px;
-    }
-    .nav-title {
-        font-weight: bold;
-        border-bottom: 1px solid;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-    }
-    .img-wrapper {
+    height:90vh;
+    .media-wrapper {
         position: relative;
-        min-height: 400px;
-        max-height: 400px;
-        min-width: 300px;
-        max-width: 300px;
-        img {
+        background: white;
+        min-height: 150px;
+        border: 2px solid;
+        border-radius: 5px;
+        .image-box {
+            max-height: 140px;
+            width: 90%;
             position: absolute;
-            max-height: 100%;
-            max-width: 100%;
-            min-width: 100%;
-            min-height: 100%;
+            background-repeat: no-repeat;
+            min-height: 140px;
+            margin: 5px;
+            border-radius: 5px;
         }
-        .show-box {
-            .transition(opacity, 0.5s);
-            position: absolute;
-            max-height: 100%;
-            max-width: 100%;
-            min-width: 100%;
-            min-height: 100%;
-            opacity: 0;
-            &:hover {
-                background: black;
-                opacity: .5;
-            }
+    }
+}
+
+.series {
+    .banner-overlay {
+        .transition(all, 0.5s);
+        border-radius: 5px;
+        width:100%;
+        height: 100%;
+        background: rgba(0,0,0,0);
+        position: absolute;
+        left: 0;
+        top : 0;
+        &:hover {
+            background: rgba(0,0,0,.3);
+        }
+    }
+    .ng-gallery {
+        display: flex;
+        img {
+            height: 100px;
+            width: 200px;
         }
     }
 }

@@ -7,24 +7,23 @@ function ($http, $q, Flash)
   self.cache = {}
   self.cache.getMediaEpisodes = {}
 
-  self.getAllMedia = function () {
-    if ('getAllMedia' in self.cache) {
-      var deferred = $q.defer()
-      deferred.resolve(self.cache.getAllMedia)
-      return deferred.promise
-    } else {
-      return $http({
-        url: '/media/all',
-        method: 'GET',
-        params: {
-            page : 0,
-            limit : 50,
-        }
-      }).then(function (response) {
-        self.cache.getAllMedia = _.sortBy(response.data, 'name')
-        return self.cache.getAllMedia
-      })
+  self.getAllMedia = function (page, limit, contains, onair) {
+    var params = {
+      page : page,
+      limit : limit,
+      contains : contains ? contains : '',
+      onair : onair,
     }
+    console.log(params)
+    return $http({
+      url: '/media/all',
+      method: 'GET',
+      params: params
+    }).then(function (response) {
+      return _.sortBy(response.data, function(dat){
+        return -(dat.rating ? 1 : 0)
+      })
+    })
   }
 
   self.getMediaEpisodes = function (id) {
@@ -40,7 +39,8 @@ function ($http, $q, Flash)
             id : id,
           }
         }).then(function (response) {
-          self.cache.getMediaEpisodes[id] = _.filter(response.data, function (data) { return 'meta' in data })
+          console.log(response)
+          self.cache.getMediaEpisodes[id] = response.data/*_.filter(response.data, function (data) { return 'meta' in data })*/
           return self.cache.getMediaEpisodes[id]
         })
       }

@@ -1,12 +1,35 @@
 <div>
-	<div layout="row" class="main" style="height:90vh">
-		<md-card flex="83" layout="column" style="overflow-y: auto">
+	<div layout="row" class="main">
+		<md-card flex="83" layout="column" style="position: relative">
 			<div ng-class="{'show' : ctrl.loading, 'remove' : !ctrl.loading}" layout="row" layout-sm="column" layout-align="space-around">
 				<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 			</div>
-			<span ng-click="ctrl.navigate(dat.seriesID)" ng-class="{'show' : !ctrl.loading, 'remove' : ctrl.loading}" ng-repeat="dat in ctrl.fData">
-				{{ dat }}
-			</span>
+			<se-scroll callback='ctrl.loadMore()' style="overflow-y: auto; height:90vh; display: block;">
+				<div class="media-wrapper" ng-class="{'show' : !ctrl.loading, 'remove' : ctrl.loading}" ng-repeat="dat in ctrl.data">
+					<div class="image-box" ng-style="{ 'background' : dat.banner ?
+						'linear-gradient(to right, rgba(255, 255, 255, 0) 9%, rgba(255, 255, 255, 1) 60%), url(\'http://thetvdb.com/banners/{{ dat.banner }}\')' :
+						'linear-gradient(to right, rgba(255, 255, 255, 0) 9%, rgba(255, 255, 255, 1) 60%), rgba(0, 0, 0, 1)' }"></div>
+					<div class="md-margin" style="background: linear-gradient(to right, rgba(255, 255, 255, 0) , rgba(255, 255, 255, 1)); position: absolute; padding-right: 100px; right: 0; top: 0; height: 90%; width: 600px;" layout="row" layout-align="space-around center">
+						<div flex="80" layout="column" style="display:inline-flex;">
+							<h2>{{ dat.name }}</h2>
+							<div layout="row" class="md-margin">
+								<div flex="50" layout="column" style="display:inline-flex;">
+									<span ng-if="dat.content" style="font-weight:bold">{{ dat.content }}</span>
+									<span class="color" ng-class="{ 'red': dat.status === 'Ended', 'green': dat.status === 'Continuing' }" style="font-weight:bold"> {{ dat.status }} </span>
+								</div>
+								<div flex="50" layout="column" style="display:inline-flex;">
+									<span ng-if="dat.imdbRating > 0"> ImdbRating: {{ dat.imdbRating }} </span>
+									<span ng-if="dat.rating > 0"> Rating: {{ dat.rating }} </span>
+								</div>
+							</div>
+						</div>
+						<div flex="20" layout="column" style="display:inline-flex;">
+							<md-button ng-if="dat.imdb" layout-align="center end" class="md-margin md-raised md-primary active" ng-click="$root.nav('http://www.imdb.com/title/' + dat.imdb)">Imdb</md-button>
+							<md-button layout-align="center end" class="md-margin md-raised md-primary active" ng-click="ctrl.navigate(dat.seriesID)">Meta</md-button>
+						</div>
+					</div>
+				</div>
+			</se-scroll>
 		</md-card>
 		<md-card flex="15" layout="column">
 			<md-input-container class="md-margin">

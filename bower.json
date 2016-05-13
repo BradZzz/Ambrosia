@@ -33,7 +33,10 @@
     "videogular-poster": "^1.4.3",
     "videogular-ima-ads": "^1.4.3",
     "videogular-angulartics": "^1.4.3",
-    "angular-sanitize": "^1.5.3"
+    "angular-sanitize": "^1.5.3",
+    "ngInfiniteScroll": "^1.2.2",
+    "ngGallery": "git+https://github.com/BradZzz/ngGallery.git",
+    "components-font-awesome": "^4.6.1"
   },
   "resolutions": {
     "angular": "~1.4.2"

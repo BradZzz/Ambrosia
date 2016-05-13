@@ -214,4 +214,6 @@ function ($http)
     console.log(self.logName + " response: ", response)
   }
 
+
+
 }]);
