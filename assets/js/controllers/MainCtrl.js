@@ -104,6 +104,7 @@ angular.module('ambrosia').controller('MainCtrl',
             return ex.imdbId
         })
         seSenderHelper.load($scope.params.excludes).then(function(params){
+            console.log('load')
             load()
         })
     })
@@ -137,7 +138,12 @@ angular.module('ambrosia').controller('MainCtrl',
     })
     $scope.$on('init', function () {
         console.log('init')
-        $scope.ctrl.init()
+        if ('ctrl' in $scope && 'init' in $scope.ctrl) {
+          console.log('init')
+          $scope.ctrl.init()
+        } else {
+          console.log('no init')
+        }
     })
     $scope.$on('mediaSelected', function (scope, selected) {
       console.log('mediaSelected', selected)

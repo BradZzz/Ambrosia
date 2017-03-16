@@ -1,12 +1,3 @@
-/***
-nasdaq stocks
-http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NASDAQ&render=download
-nyse stocks
-http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NYSE&render=download
-asx stocks
-http://www.asx.com.au/asx/research/ASXListedCompanies.csv
-***/
-
 require('dotenv').load()
 
 var Q           = require('q')
@@ -89,9 +80,6 @@ module.exports = function (app) {
       return res.status(200).json({ pre : process.env.MEDIA_PREFIX, post : process.env.MEDIA_POSTFIX })
     })
 
-    /***
-    TODO: omdbapi is down permanently. Need to find replacement!
-    ***/
     app.get('/cast/media/episode', function (req, res) {
         console.log(req.query)
         if ('name' in req.query && 'season' in req.query && 'episode' in req.query) {
@@ -254,10 +242,6 @@ module.exports = function (app) {
         return deferred.promise
     }
 
-    /***
-    TODO: omdbapi is down permanently. Need to find replacement!
-    TODO: For now update the meta manually
-    ***/
     function requestMeta(media) {
         var deferred = Q.defer()
 
