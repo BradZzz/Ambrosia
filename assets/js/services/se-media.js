@@ -51,21 +51,15 @@ function ($http, $q, Flash)
         { name : "Drulz Special", create :
             function (meta) {
                 return _.map(
-                    _.filter(meta, function(file){ return file.type === 'tv' && 'imdbId' in  drulz }),
-
-
-
+                    _.filter(meta, function(file){ return file.type === 'tv' && 'imdbId' in  file && _.contains(drulz, file.imdbId) }),
                     function(file){ return file.imdbId }
                 )
             }
         },
-        { name : "Fard Special", create :
+        { name : "Fard Burger", create :
             function (meta) {
                 return _.map(
-                    _.filter(meta, function(file){ return file.type === 'tv' && 'imdbId' in fard }),
-
-
-
+                    _.filter(meta, function(file){ return file.type === 'tv' && 'imdbId' in  file && _.contains(fard, file.imdbId) }),
                     function(file){ return file.imdbId }
                 )
             }
