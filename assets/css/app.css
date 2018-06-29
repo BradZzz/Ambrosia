@@ -264,6 +264,10 @@ button.md-raised.active:hover {
     min-width: 250px !important;
     max-width: 250px !important;
   }
+  .main .media-list{
+    min-height: 300px !important;
+    max-height: 300px !important;
+  }
 }
 .flash-bar {
   z-index: 100;
@@ -330,6 +334,7 @@ button.md-raised.active:hover {
   min-width: 300px;
   max-width: 300px;
 }
+
 .main .img-wrapper img {
   position: absolute;
   max-height: 100%;
@@ -353,6 +358,12 @@ button.md-raised.active:hover {
   background: black;
   opacity: .5;
 }
+
+.main .media-list{
+  min-height: 400px;
+  max-height: 400px;
+}
+
 .local-player {
   border: 2px solid;
   border-radius: 5px;

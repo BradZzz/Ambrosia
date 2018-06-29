@@ -93,6 +93,15 @@ angular.module('ambrosia').controller('MainCtrl',
         $scope.params.map = seSenderHelper.params.map
 
         $scope.ctrl.init()
+
+        window.addEventListener('keydown', function (e) {
+          console.log("window event", e)
+          if (e.code === "ArrowRight") {
+            $scope.ctrl.nextM()
+          } else if (e.code === "ArrowLeft") {
+            $scope.ctrl.prevM()
+          }
+        })
     }
 
     sePrincipal.identity().then( function(data){

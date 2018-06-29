@@ -82,32 +82,35 @@ module.exports = function (app) {
 
     app.get('/cast/media/episode', function (req, res) {
         console.log(req.query)
-        if ('name' in req.query && 'season' in req.query && 'episode' in req.query) {
-            var params = {
-                title: req.query.name.replace(/_/g, ' ').capitalize(),
-                season: req.query.season,
-                episode: req.query.episode
-            }
 
-            //return res.status(200).json({ data : params })
+        return res.status(200).json({ err: "temporarily out of service" })
 
-            omdbApi.get(params, function(err, data) {
-                if (err) {
-                  console.log(err)
-                  return res.status(500).json(err)
-                } else {
-                  //console.log(data)
-                  //console.log(utils.isJSON(data))
-                  if (utils.isJSON(data)) {
-                    return res.status(200).json(data)
-                  } else {
-                    return res.status(500).json({ data : data })
-                  }
-                }
-            })
-        } else {
-            return res.status(400).json("Request doesn't contain all necessary parameters")
-        }
+//        if ('name' in req.query && 'season' in req.query && 'episode' in req.query) {
+//            var params = {
+//                title: req.query.name.replace(/_/g, ' ').capitalize(),
+//                season: req.query.season,
+//                episode: req.query.episode
+//            }
+//
+//            //return res.status(200).json({ data : params })
+//
+//            omdbApi.get(params, function(err, data) {
+//                if (err) {
+//                  console.log(err)
+//                  return res.status(500).json(err)
+//                } else {
+//                  //console.log(data)
+//                  //console.log(utils.isJSON(data))
+//                  if (utils.isJSON(data)) {
+//                    return res.status(200).json(data)
+//                  } else {
+//                    return res.status(500).json({ data : data })
+//                  }
+//                }
+//            })
+//        } else {
+//            return res.status(400).json("Request doesn't contain all necessary parameters")
+//        }
     })
 
     app.get('/cast/media', function (req, res) {
