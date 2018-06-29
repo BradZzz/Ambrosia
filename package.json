@@ -1,5 +1,5 @@
 {
-  "name": "stock-server",
+  "name": "dashdot.tv",
   "main": "app.js",
   "dependencies": {
     "async": "^1.5.2",
