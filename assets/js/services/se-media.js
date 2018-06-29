@@ -32,7 +32,7 @@ function ($http, $q, Flash)
         { name : "All Colors", create :
             function (meta) {
                 return _.map(
-                    _.filter(meta, function(file){ return file.type === 'tv' /*&& 'imdbId' in file*/ }),
+                    _.filter(meta, function(file){ return file.type === 'tv' && 'imdbId' in file }),
 
 
 
@@ -43,7 +43,7 @@ function ($http, $q, Flash)
         { name : "The Cinema", create :
             function (meta) {
                 return _.map(
-                    _.filter(meta, function(file){ return file.type === 'movie' /*&& 'imdbId' in file*/ }),
+                    _.filter(meta, function(file){ return file.type === 'movie' && 'imdbId' in file }),
                     function(file){ return file.imdbId }
                 )
             }
