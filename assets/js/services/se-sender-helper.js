@@ -18,6 +18,7 @@ angular.module('ambrosia').service('seSenderHelper',
         pulseSkip : false,
         ordDirection : 1,
         volume : 80,
+        tvPicked : 0,
 
         pre : '',
         post : '',
@@ -28,6 +29,39 @@ angular.module('ambrosia').service('seSenderHelper',
         excludes : [],
         selected : null,
         allChannels : [{ name : "Channel 404", shows : ["tt0397306", "tt1486217", "tt1561755"]}],
+    }
+
+    self.selectMedia = function(shows){
+      console.log("selectMedia", shows)
+      console.log("self.params",self.params)
+
+      var tv = []
+      var movies = []
+
+      for (var i = 0; i < shows.length; i++) {
+        if (self.params.map[shows[i]].type === 'tv'){
+          tv.push(i)
+        } else {
+          movies.push(i)
+        }
+      }
+
+      if (tv.length > 1 && movies.length > 1) {
+        console.log("Movies and TV")
+        console.log("tv", tv.length)
+        console.log("movies", movies.length)
+        console.log("tvPicked",self.params.tvPicked)
+        if (self.params.tvPicked < 5) {
+          self.params.tvPicked += 1
+          return tv[chance.integer({min: 0, max: tv.length - 1})]
+        } else {
+          self.params.tvPicked = 0
+          return movies[chance.integer({min: 0, max: movies.length - 1})]
+        }
+      } else {
+        console.log("Only one kind of media")
+        return chance.integer({min: 0, max: shows.length - 1})
+      }
     }
 
     self.load = function (excludes) {
@@ -85,14 +119,20 @@ angular.module('ambrosia').service('seSenderHelper',
                          selected = self.params.selected = self.params.map[pick]
                        } else {
                          if (!self.params.sticky || self.params.selected == null) {
-                           var iSelection = chance.integer({min: 0, max: channel.shows.length - 1})
+                           var iSelection = self.selectMedia(channel.shows)
                            if ( self.params.selected !== null || checkExclude(channel, iSelection)) {
                              if (self.params.selected === null) {
                                self.params.selected = self.params.map[channel.shows[iSelection]]
                              }
                              var nSelection = _.indexOf(channel.shows, self.params.selected.imdbId)
-                             while (nSelection === iSelection || checkExclude(channel, iSelection)) {
-                               iSelection = chance.integer({min: 0, max: channel.shows.length - 1})
+                             trycount = 0
+                             while ((nSelection === iSelection || checkExclude(channel, iSelection)) && trycount < 10) {
+                               //Slowly try to select for movies if it looks like tv isnt working out
+                               if (self.params.tvPicked > 0 && trycount < 5){
+                                self.params.tvPicked -= 1
+                               }
+                               iSelection = self.selectMedia(channel.shows)
+                               trycount += 1
                              }
                            }
                            selected = self.params.selected = self.params.map[channel.shows[iSelection]]
@@ -144,6 +184,7 @@ angular.module('ambrosia').service('seSenderHelper',
                        self.params.paused = !self.params.paused
                      },
                      navC : function (dir) {
+                       self.params.tvPicked = 0;
                        self.params.sticky = false
                        if (dir + self.params.channel < 0) {
                          self.params.channel = self.params.allChannels.length - 1
