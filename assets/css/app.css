@@ -217,8 +217,6 @@ button.md-raised.active:hover {
   .profile .content .profile-wrapper {
     width: 100% !important;
   }
-}
-@media screen and (max-width: 600px) {
   .media .media-image-wrapper {
     margin: 0 auto 20px auto;
   }
@@ -252,6 +250,10 @@ button.md-raised.active:hover {
   .profile .content .footer.md-raised {
     margin: 5px auto 10px auto !important;
   }
+  .main .media-list {
+    min-height: 300px !important;
+    max-height: 300px !important;
+  }
   .main .cast-play.md-fab {
     min-width: 40px !important;
     max-width: 40px !important;
@@ -263,10 +265,6 @@ button.md-raised.active:hover {
     max-height: 300px !important;
     min-width: 250px !important;
     max-width: 250px !important;
-  }
-  .main .media-list{
-    min-height: 300px !important;
-    max-height: 300px !important;
   }
 }
 .flash-bar {
@@ -334,7 +332,6 @@ button.md-raised.active:hover {
   min-width: 300px;
   max-width: 300px;
 }
-
 .main .img-wrapper img {
   position: absolute;
   max-height: 100%;
@@ -358,12 +355,10 @@ button.md-raised.active:hover {
   background: black;
   opacity: .5;
 }
-
-.main .media-list{
+.main .media-list {
   min-height: 400px;
   max-height: 400px;
 }
-
 .local-player {
   border: 2px solid;
   border-radius: 5px;

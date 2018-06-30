@@ -1,6 +1,6 @@
 <div>
 	<div layout="column" class="main">
-		<md-card style="min-height:600px; height:90vh;" layout="column">
+		<md-card style="min-height:600px; height:90vh;position: relative;" layout="column">
 			<h3 style="text-align: center;">{{ params.allChannels[params.channel].name }}</h3>
 			<div layout="row">
 				<div layout="column" offset-gt-sm="10" offset="15">
@@ -37,7 +37,7 @@
 					</div>
 				</div>
 
-				<div hide show-gt-sm layout="row" flex>
+				<div hide show-gt-sm layout="row" flex style="position: relative;">
 					<div layout="row" class="center-vertical" style="margin: 0 10px 0 10px; padding-left: 20px; position: absolute;">
 						<div class="background-parent" layout="column" layout-align="center center" style="min-width:150px; max-width:150px; max-height: 400px; min-height: 400px; margin-bottom: 20px;">
 							<div style=""></div>
@@ -56,7 +56,7 @@
 							<md-button style="min-height: 18px; min-width: 42px; max-width: 42px;" ng-repeat="vol in params.volSettings" class="md-raised md-cornered" ng-click="ctrl.setV(vol)" ng-class="{ 'active' : params.volume >= vol }"></md-button>
 						</div>
 					</div>
-					<div flex="45" layout="column" layout-fill style="margin: 0 20px; padding-top: 20px; position: absolute; right: 0;">
+					<div flex="60" layout="column" layout-fill style="margin: 0 20px; padding-top: 20px; position: absolute; right: 0;">
 						<div class="center-vertical-parent" layout="row" style="font-weight:bold;">
 							<div class="md-margin media-rating-wrapper" style="margin-right: 30px;">
 								<div class="media-rating-huebox"></div>
