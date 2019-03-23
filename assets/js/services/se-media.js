@@ -57,7 +57,11 @@ function ($http, $q, Flash)
         { name : "Drulz Special", create :
             function (meta) {
                 return _.map(
-                    _.filter(meta, function(file){ return file.type === 'tv' && 'imdbId' in  file && _.contains(drulz, file.imdbId) }),
+                    _.filter(meta, function(file){
+                      return (file.type === 'tv' && 'imdbId' in  file && _.contains(drulz, file.imdbId)) ||
+                      (file.type === 'movie' && file.imdbRating >= 7 && _.contains(file.genre, 'Adventure' ) &&
+                         (file.rated === "G" || file.rated === "PG" || file.rated === "PG-13"))
+                    }),
                     function(file){ return file.imdbId }
                 )
             }
